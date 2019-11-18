@@ -1,0 +1,43 @@
+stages:
+  - build
+  - test
+
+image: debian:stable
+
+build:debian:
+  stage: build
+  script:
+  - apt-get update
+  - apt-get install -y python3-all python3-docopt python3-setuptools
+                       python3-docopt python3-pkg-resources python3-xdg
+                       python3-chardet
+  - python3 setup.py install
+  - isbg --version
+
+build:pypi:
+  stage: build
+  script:
+  - apt-get update && apt-get install -y python3-pip
+  - pip3 install -r requirements-build.txt
+  - pip3 install -r requirements.txt
+  - python3 setup.py install
+  - isbg --version
+
+build:docs:
+  stage: build
+  script:
+  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme
+  - make html
+  - mv build/sphinx/html/ public/
+  artifacts:   # Gitlab Pages
+    paths:
+      - public
+  only:
+  - master
+
+test:pytest:
+  stage: test
+  script:
+  - apt-get update && apt-get install -y python3-pytest python3-pytest-runner
+                                         python3-recommonmark python3-docopt
+  - pytest-3 tests
