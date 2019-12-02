@@ -50,7 +50,7 @@ setup(
     },
     setup_requires=pytest_runner,
     tests_require=['pytest', 'mock', 'pytest-cov'],
-    url='https://github.com/isbg/isbg',
+    url='https://gitlab.com/isbg/isbg',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',

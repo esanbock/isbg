@@ -27,7 +27,7 @@ build:docs:
   stage: build
   script:
   - apt-get update
-  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python-docopt
+  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
                        python3-recommonmark
   - make html
   - mv build/sphinx/html/ public/

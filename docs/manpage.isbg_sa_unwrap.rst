@@ -50,4 +50,4 @@ The full documentation for isbg is maintained in https://isbg.readthedocs.io/
 BUGS
 ----
 
-You can report bugs on https://github.com/isbg/isbg/issues
+You can report bugs on https://gitlab.com/isbg/isbg/issues

@@ -268,4 +268,4 @@ With ``--exitcodes`` there are also:
 BUGS
 ----
 
-You can report bugs on https://github.com/isbg/isbg/issues
+You can report bugs on https://gitlab.com/isbg/isbg/issues

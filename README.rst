@@ -100,7 +100,7 @@ Install from source
 Download a copy of the isbg repository onto your machine::
 
     $ cd ~
-    $ git clone https://github.com/isbg/isbg.git
+    $ git clone https://gitlab.com/isbg/isbg.git
 
 Install program dependencies::
 

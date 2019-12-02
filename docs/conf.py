@@ -11,11 +11,11 @@ import recommonmark
 
 # -- Custom variables -----------------------------------------------------
 
-cvar_github_base_uri = 'https://github.com/'
-cvar_github_prj = 'isbg'
-cvar_github_usr = 'isbg'
-cvar_github_uri = cvar_github_base_uri + cvar_github_prj + '/' + \
-    cvar_github_usr
+cvar_gitlab_base_uri = 'https://gitlab.com/'
+cvar_gitlab_prj = 'isbg'
+cvar_gitlab_usr = 'isbg'
+cvar_gitlab_uri = cvar_gitlab_base_uri + cvar_gitlab_prj + '/' + \
+    cvar_gitlab_usr
 cvar_pypi_uri = 'https://pypi.python.org/pypi/isbg'
 
 master_doc = 'index'  # The master toctree document.
@@ -48,7 +48,6 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
               'sphinx.ext.ifconfig',
               'sphinx.ext.extlinks',
-              'sphinx.ext.githubpages',
               'sphinx.ext.autosummary',
               'sphinx.ext.todo'
               ]
@@ -107,8 +106,8 @@ napoleon_use_rtype = True
 # -- Options for extlinks extension ---------------------------------------
 
 extlinks = {
-    'issue': (cvar_github_uri + '/issues/%s', 'issue '),  # e.g. :issue:`12`
-    'pull': (cvar_github_uri + '/pull/%s', 'pull ')      # e.g. :pull:`11`
+    'issue': (cvar_gitlab_uri + '/issues/%s', 'issue '),  # e.g. :issue:`12`
+    'pull': (cvar_gitlab_uri + '/pull/%s', 'pull ')      # e.g. :pull:`11`
 }
 
 
