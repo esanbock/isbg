@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 image: debian:stable
 
@@ -23,18 +24,17 @@ build:pypi:
   - python3 setup.py install
   - isbg --version
 
-build:docs:
-  stage: build
+test:doc:
+  stage: test
   script:
   - apt-get update
   - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
                        python3-recommonmark
-  - make html
-  - mv build/sphinx/html/ public/
-  artifacts:   # Gitlab Pages
+  - sphinx-build -b html docs testdocs
+  artifacts:
     paths:
-      - public
-  only:
+    - testdocs
+  except:
   - master
 
 test:pytest:
@@ -43,3 +43,16 @@ test:pytest:
   - apt-get update && apt-get install -y python3-pytest python3-pytest-runner
                                          python3-recommonmark python3-docopt
   - pytest-3 tests
+
+pages:
+  stage: deploy
+  script:
+  - apt-get update
+  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
+                       python3-recommonmark
+  - sphinx-build -b html docs public
+  artifacts:
+    paths:
+      - public
+  only:
+  - master
