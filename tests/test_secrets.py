@@ -38,13 +38,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(
 from isbg import secrets      # noqa: E402
 from isbg import imaputils    # noqa: E402
 
-# To check if a cmd exists:
-
-def cmd_exists(x):
-    """Check for a os command line."""
-    return any(os.access(os.path.join(path, x), os.X_OK)
-               for path in os.environ["PATH"].split(os.pathsep))
-
 
 class Test_SecretIsbg(object):
     """Test SecretIsbg class."""
