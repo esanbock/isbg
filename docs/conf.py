@@ -156,14 +156,11 @@ man_pages = [
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 
-# -- Read the Docs integration: generate the documentation from sources -----
+# -- Generate the documentation from sources -----
 
 def run_apidoc(_):
     """Run apidoc."""
-    try:
-        from sphinx.ext.apidoc import main  # sphinx => 1.7.0b1
-    except ImportError:
-        from sphinx.apidoc import main
+    from sphinx.ext.apidoc import main
     import os
     import sys
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))

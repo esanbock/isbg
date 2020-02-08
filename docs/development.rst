@@ -29,6 +29,3 @@ You should:
    ``./requirements.txt`` and/or ``./requirements-build.txt``.
 #. Commit it to `master`.
 #. Tag the new version
-#. Login to `readthedocs`_ and update the *stable* version.
-
-.. _readthedocs: http://readthedocs.io/
