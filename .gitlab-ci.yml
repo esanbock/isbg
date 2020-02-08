@@ -1,11 +1,40 @@
 stages:
-  - build
   - test
+  - build
   - deploy
 
 image: debian:stable
 
-build:debian:
+test:docs:
+  stage: test
+  script:
+  - apt-get update
+  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
+                       python3-recommonmark
+  - make html
+  - mv build/sphinx/html testdocs
+  artifacts:
+    paths:
+    - testdocs
+    expire_in: 1 week
+  except:
+  - master
+
+test:unit:
+  stage: test
+  script:
+  - apt-get update && apt-get install -y make python3-pytest python3-pytest-runner
+                                         python3-recommonmark python3-docopt
+  - make test
+
+test:pypi:
+  stage: test
+  script:
+  - apt-get update && apt-get install -y twine
+  - python3 setup.py sdist
+  - twine check dist/*
+
+install:debian:
   stage: build
   script:
   - apt-get update
@@ -15,7 +44,7 @@ build:debian:
   - python3 setup.py install
   - isbg --version
 
-build:pypi:
+install:pypi:
   stage: build
   script:
   - apt-get update && apt-get install -y python3-pip
@@ -24,33 +53,14 @@ build:pypi:
   - python3 setup.py install
   - isbg --version
 
-test:doc:
-  stage: test
-  script:
-  - apt-get update
-  - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
-                       python3-recommonmark
-  - sphinx-build -b html docs testdocs
-  artifacts:
-    paths:
-    - testdocs
-  except:
-  - master
-
-test:pytest:
-  stage: test
-  script:
-  - apt-get update && apt-get install -y python3-pytest python3-pytest-runner
-                                         python3-recommonmark python3-docopt
-  - pytest-3 tests
-
 pages:
   stage: deploy
   script:
   - apt-get update
   - apt-get install -y python3-sphinx python3-sphinx-rtd-theme python3-docopt
                        python3-recommonmark
-  - sphinx-build -b html docs public
+  - make html
+  - mv build/sphinx/html public
   artifacts:
     paths:
       - public

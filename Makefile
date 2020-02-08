@@ -17,16 +17,13 @@
 # - For test: pytest
 # - For cov: python-pytest-cov and python3-pytest-cov, also
 #            python-coverage
-# - For tox: tox
 # - For docs: sphinx and recommonmark
-TEST   = pytest
-COV    = pytest --cov-append --cov isbg -m 2
-COV3   = pytest-3 --cov-append --cov isbg -m 2
-COVREP = python-coverage
+TEST   = pytest-3
+COV    = pytest-3 --cov-append --cov isbg -m 2
+COVREP = python3-coverage
 COVDIR = build/htmlcov
-TOX    = tox
 
-.PHONY: help all test-clean test cov-clean cov tox-clean tox docs clean \
+.PHONY: help all test-clean test cov-clean cov docs clean \
         distclean build build-clean man sphinx sphinx-clean
 
 help:
@@ -34,10 +31,9 @@ help:
 	@echo "  help       to show this help message."
 	@echo "   "
 	@echo "  test       to run the tests."
-	@echo "  tox        to run tests with 'tox'."
 	@echo "  cov        to check test 'coverage'."
 	@echo "   "
-	@echo "  build      build create a build dist 'python setup.py'."
+	@echo "  build      build create a build dist 'python3 setup.py'."
 	@echo "  docs       build the docs with 'sphinx'."
 	@echo "    html     build only html pages"
 	@echo "    man      build only manpages"
@@ -56,12 +52,6 @@ test-clean:
 test:
 	@$(TEST)
 
-tox-clean:
-	rm -fr .tox
-
-tox:
-	@$(TOX)
-
 cov-clean:
 	@$(COVREP) erase | true
 	rm -f .coverage
@@ -69,23 +59,20 @@ cov-clean:
 
 cov: cov-clean
 	@$(COV)
-	@$(COV3)
 	@$(COVREP) html --directory $(COVDIR)
 
 # -------------------------------------------------------------------- #
 build-clean:
-	python setup.py clean
+	python3 setup.py clean
 	rm -fr build/build
 	rm -fr .eggs
 
 build:
-	python setup.py build -b build/build -t build/tmp
-	python setup.py sdist -d build/dist --formats=bztar,zip
-	python setup.py bdist -d build/dist
-	python setup.py bdist_egg -d build/dist
-	python setup.py bdist_wheel -d build/dist
-	mkdir -p build/dist/rpms
-	python setup.py bdist_rpm -d build/dist/rpms
+	python3 setup.py build -b build/build -t build/tmp
+	python3 setup.py sdist -d build/dist --formats=bztar,zip
+	python3 setup.py bdist -d build/dist
+	python3 setup.py bdist_egg -d build/dist
+	python3 setup.py bdist_wheel -d build/dist
 	rm -fr isbg.egg-info
 	rm -fr build/lib.*
 	rm -fr build/bdist.*
@@ -125,7 +112,7 @@ clean: test-clean sphinx-clean build-clean
 	rm -fr isbg/__pycache__
 	rm -fr tests/__pycache__
 
-distclean: clean tox-clean cov-clean docs-clean
+distclean: clean cov-clean docs-clean
 	$(MAKE) -C docs clean-all
 	rm -fr build
 	rm -fr dist

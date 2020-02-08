@@ -233,7 +233,7 @@ SEE ALSO
 `spamassassin(1)`,
 `Mail::SpamAssassin::Conf(3)`.
 
-The full documentation for isbg is maintained in https://isbg.readthedocs.io/
+The full documentation for isbg is maintained in https://isbg.gitlab.io/isbg
 
 
 EXIT CODES
