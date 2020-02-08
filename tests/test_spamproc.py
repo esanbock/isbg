@@ -39,83 +39,55 @@ from isbg import spamproc   # noqa: E402
 from isbg import isbg       # noqa: E402
 from isbg.imaputils import new_message  # noqa: E402
 
-# To check if a cmd exists:
 
-
-def cmd_exists(x):
-    """Check for a os command line."""
-    return any(os.access(os.path.join(path, x), os.X_OK)
-               for path in os.environ["PATH"].split(os.pathsep))
-
-
+@pytest.mark.spamassassin
 def test_learn_mail():
-    """Tests for learn_mail."""
+    """Tests for learn_mail, with a running SA instance."""
     fmail = open('tests/examples/spam.eml', 'rb')
     ftext = fmail.read()
     mail = new_message(ftext)
     fmail.close()
 
-    if cmd_exists('spamc'):
-        # We forget the mail:
-        spamproc.learn_mail(mail, 'forget')
-        # We forget the mail:
-        ret, ret_o = spamproc.learn_mail(mail, 'forget')
-        assert ret is 6, "Mail should be already unlearned."
-        # We try to learn it (as spam):
-        ret, ret_o = spamproc.learn_mail(mail, 'spam')
-        assert ret is 5, "Mail should have been learned"
-        # The second time it should be already learned:
-        ret, ret_o = spamproc.learn_mail(mail, 'spam')
-        assert ret is 6, "Mail should be already learned."
-    else:
-        # We forget the mail:
-        with pytest.raises(OSError, match="No such file"):
-            spamproc.learn_mail(mail, 'forget')
-            pytest.fail("Should rise OSError.")
+    # We forget the mail:
+    spamproc.learn_mail(mail, 'forget')
+    # We forget the mail:
+    ret, ret_o = spamproc.learn_mail(mail, 'forget')
+    assert ret is 6, "Mail should be already unlearned."
+    # We try to learn it (as spam):
+    ret, ret_o = spamproc.learn_mail(mail, 'spam')
+    assert ret is 5, "Mail should have been learned"
+    # The second time it should be already learned:
+    ret, ret_o = spamproc.learn_mail(mail, 'spam')
+    assert ret is 6, "Mail should be already learned."
 
 
+@pytest.mark.spamassassin
 def test_test_mail():
-    """Tests for learn_mail."""
+    """Tests for learn_mail, with a running SA instance."""
     fmail = open('tests/examples/spam.eml', 'rb')
     ftext = fmail.read()
     mail = new_message(ftext)
     fmail.close()
 
-    if cmd_exists('spamc'):
-        # We test the mail with spamc:
-        score1, code1, spamassassin_result = spamproc.test_mail(mail, True)
-        score2, code2, spamassassin_result = spamproc.test_mail(mail, cmd=["spamc",
-                                                     "-E", "--max-size=268435450"])
-        assert score1 == score2, "The score should be the same."
-        assert code1 == code2, "The return code should be the same."
-        score, code, spamassassin_result = spamproc.test_mail("", True)
-        assert score == u'-9999', 'It should return a error'
-        assert code is None, 'It should return a error'
-    else:
-        with pytest.raises(OSError, match="No such file"):
-            spamproc.test_mail(mail, True)
-            pytest.fail("Should rise OSError.")
-        with pytest.raises(OSError, match="No such file"):
-            spamproc.test_mail(mail, cmd=["spamc", "-E", "--max-size=268435450"])
-            pytest.fail("Should rise OSError.")
+    # We test the mail with spamc:
+    score1, code1, spamassassin_result = spamproc.test_mail(mail, True)
+    score2, code2, spamassassin_result = spamproc.test_mail(mail, cmd=["spamc",
+                                                 "-E", "--max-size=268435450"])
+    assert score1 == score2, "The score should be the same."
+    assert code1 == code2, "The return code should be the same."
+    score, code, spamassassin_result = spamproc.test_mail("", True)
+    assert score == u'-9999', 'It should return a error'
+    assert code is None, 'It should return a error'
 
-    if cmd_exists('spamassassin'):
-        # We test the mail with spamassassin:
-        score3, code3, spamassassin_result = spamproc.test_mail(mail, False)
-        score4, code4, spamassassin_result = spamproc.test_mail(mail, cmd=["spamassassin",
-                                                      "--exit-code"])
-        assert score3 == score4, "The score should be the same."
-        assert code3 == code4, "The return code should be the same."
-        score, code, spamassassin_result = spamproc.test_mail("", False)
-        assert score == u'-9999', 'It should return a error'
-        assert code is None, 'It should return a error'
-    else:
-        with pytest.raises(OSError, match="No such file"):
-            spamproc.test_mail(mail, False)
-            pytest.fail("Should rise OSError.")
-        with pytest.raises(OSError, match="No such file"):
-            spamproc.test_mail(mail, cmd=["spamassassin", "--exit-code"])
-            pytest.fail("Should rise OSError.")
+    # We test the mail with spamassassin:
+    score3, code3, spamassassin_result = spamproc.test_mail(mail, False)
+    score4, code4, spamassassin_result = spamproc.test_mail(mail, cmd=["spamassassin",
+                                                  "--exit-code"])
+    assert score3 == score4, "The score should be the same."
+    assert code3 == code4, "The return code should be the same."
+    score, code, spamassassin_result = spamproc.test_mail("", False)
+    assert score == u'-9999', 'It should return a error'
+    assert code is None, 'It should return a error'
 
     # We try a random cmds (existant and unexistant):
     score, code, spamassassin_result = spamproc.test_mail("", cmd=["echo"])

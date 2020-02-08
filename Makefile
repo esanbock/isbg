@@ -18,8 +18,8 @@
 # - For cov: python-pytest-cov and python3-pytest-cov, also
 #            python-coverage
 # - For docs: sphinx and recommonmark
-TEST   = pytest-3
-COV    = pytest-3 --cov-append --cov isbg -m 2
+TEST   = pytest-3 -m "not spamassassin"
+COV    = pytest-3 -m "not spamassassin" --cov-append --cov isbg -m 2
 COVREP = python3-coverage
 COVDIR = build/htmlcov
 
