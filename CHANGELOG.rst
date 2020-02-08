@@ -6,6 +6,15 @@ What has been done since last release.
 Unreleased
 ----------
 
+isbg 2.3.0 (20200208)
+---------------------
+
+* isbg should now build reproducibly
+* full documentation is now hosted on Gitlab Pages
+* improved Gitlab CI automated test suite
+* complete migration to Gitlab
+* fix bugs
+
 isbg 2.2.1 (20191113)
 ---------------------
 

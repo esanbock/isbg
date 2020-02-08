@@ -4,6 +4,11 @@ News [#]_
 Unreleased
 ----------
 
+New in 2.3.0
+~~~~~~~~~~~~
+
+isbg has migrated to Gitlab. Please update your git remotes!
+
 New in 2.1.5
 ~~~~~~~~~~~~
 
