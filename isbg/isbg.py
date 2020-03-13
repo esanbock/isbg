@@ -47,7 +47,7 @@ if xdg_cache_home == "":
 We used this directory to create a `isbg/` one to store cached data:
     * lock file.
     * password file.
-    * chached lists of ``uids``.
+    * cached lists of ``uids``.
 
 Note:
     For best `xdg_cache_home` detection, install *python-xdg*.
