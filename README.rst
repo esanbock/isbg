@@ -198,7 +198,7 @@ by telling **isbg** to use that instead of running a regular process.
 
 On most Linux distributions, you can run *SpamAssassin* as a daemon this way::
 
-    $ systemclt enable spamassassin
+    $ systemctl enable spamassassin
     $ systemctl start spamassassin
 
 You can then run **isbg** with the ``--spamc`` option to make use of the daemon.
