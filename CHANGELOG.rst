@@ -6,6 +6,11 @@ What has been done since last release.
 Unreleased
 ----------
 
+isbg 2.3.1 (20200817)
+---------------------
+
+* fix reproducible build bug for real this time
+
 isbg 2.3.0 (20200208)
 ---------------------
 
