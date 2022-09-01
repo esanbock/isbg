@@ -105,6 +105,7 @@ Command line Options::
   --partialrun num       Stop operation after scanning 'num' unseen
                          emails. Use 0 to run without partial run
                          [default: 50].
+  --newonly              Only process new messages in each folder
   --passwdfilename fn    Use a file to supply the password.
   --savepw               Store the password to be used in future runs.
   --spamc                Use spamc instead of standalone SpamAssassin
@@ -233,6 +234,8 @@ def parse_args(sbg):
 
     sbg.teachonly = opts.get('--teachonly', sbg.teachonly)
     sbg.spamc = opts.get('--spamc', sbg.spamc)
+
+    sbg.newonly = opts.get('--newonly', sbg.newonly)
 
     sbg.exitcodes = opts.get('--exitcodes', sbg.exitcodes)
 

@@ -276,6 +276,7 @@ class ISBG(object):
         # Processing options:
         self.dryrun, self.maxsize, self.teachonly = (False, 120000, False)
         self.spamc, self.gmail = (False, False)
+        self.newonly = False
         # spamassassin options:
         self.movehamto, self.delete = (None, False)
         self.deletehigherthan, self.flag, self.expunge = (None, False, False)

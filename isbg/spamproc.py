@@ -159,7 +159,7 @@ class SpamAssassin(object):
     _kwargs = ['imap', 'spamc', 'logger', 'partialrun', 'dryrun',
                'learnthendestroy', 'gmail', 'learnthenflag', 'learnunflagged',
                'learnflagged', 'deletehigherthan', 'imapsets', 'maxsize',
-               'noreport', 'spamflags', 'delete', 'expunge']
+               'noreport', 'spamflags', 'delete', 'expunge', 'newonly']
 
     def __init__(self, **kwargs):
         """Initialize a SpamAssassin object."""
@@ -415,7 +415,10 @@ class SpamAssassin(object):
         self.imap.select(self.imapsets.inbox, 1)
 
         # get the uids of all mails with a size less then the maxsize
-        _, uids = self.imap.uid("SEARCH", None, "SMALLER", str(self.maxsize))
+        if self.newonly:
+            _, uids = self.imap.uid("SEARCH", None, "UNSEEN")
+        else:
+            _, uids = self.imap.uid("SEARCH", None, "SMALLER", str(self.maxsize))
 
         uids, sa_proc.newpastuids = SpamAssassin.get_formated_uids(
             uids, origpastuids, self.partialrun)
