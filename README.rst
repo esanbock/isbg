@@ -1,5 +1,7 @@
-IMAP Spam Begone
+IMAP Spam Begone (--newonly fork)
 ================
+This fork of isbg adds a --newonly flag so that only new messages get processed and
+evaluated for both learning and detecting spam.  This saves time on large inboxes
 
 **isbg** is a script and a python 3 module that makes it easy to scan an
 IMAP inbox for spam using *SpamAssassin* and get your spam moved to another
