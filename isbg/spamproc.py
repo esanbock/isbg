@@ -416,6 +416,7 @@ class SpamAssassin(object):
 
         # get the uids of all mails with a size less then the maxsize
         if self.newonly:
+            self.logger.info("only checking new messages because of --newonly")
             _, uids = self.imap.uid("SEARCH", None, "UNSEEN")
         else:
             _, uids = self.imap.uid("SEARCH", None, "SMALLER", str(self.maxsize))
