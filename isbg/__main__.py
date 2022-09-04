@@ -48,6 +48,10 @@ if __package__ is None and not hasattr(sys, 'frozen'):
     sys.path.insert(0, os.path.dirname(os.path.dirname(path)))
 from isbg import isbg  # noqa: E402
 
+def cleanmboxstring(mailbox):
+    if " " in mailbox and not mailbox.startswith('"'):
+        mailbox = '"' + mailbox + '"'
+    return mailbox
 
 def __cmd_opts__():  # noqa: D207
     """Isbg scans an IMAP Inbox and runs every entry against SpamAssassin.
@@ -122,7 +126,6 @@ Command line Options::
    --delete)
     """
 
-
 def parse_args(sbg):
     """Argument processing of the command line.
 
@@ -171,9 +174,9 @@ def parse_args(sbg):
     sbg.imapsets.port = opts.get('--imapport', sbg.imapsets.port)
     sbg.imapsets.user = opts.get('--imapuser', sbg.imapsets.user)
     sbg.imapsets.inbox = opts.get('--imapinbox', sbg.imapsets.inbox)
-    sbg.imapsets.spaminbox = opts.get('--spaminbox', sbg.imapsets.spaminbox)
-    sbg.imapsets.learnspambox = opts.get('--learnspambox')
-    sbg.imapsets.learnhambox = opts.get('--learnhambox')
+    sbg.imapsets.spaminbox = cleanmboxstring(opts.get('--spaminbox', sbg.imapsets.spaminbox))
+    sbg.imapsets.learnspambox =  cleanmboxstring(opts.get('--learnspambox'))
+    sbg.imapsets.learnhambox =  cleanmboxstring(opts.get('--learnhambox'))
     sbg.imapsets.nossl = opts.get('--nossl', sbg.imapsets.nossl)
 
     sbg.lockfilegrace = float(opts.get('--lockfilegrace', sbg.lockfilegrace))
