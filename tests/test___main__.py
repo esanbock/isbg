@@ -48,7 +48,7 @@ def test_parse_args():
     del sys.argv[1:]
     for op in ["--imaphost", "localhost", "--imapuser", "anonymous",
                "--imappasswd", "none", "--dryrun", "--flag",
-               "--noninteractive"]:
+               "--noninteractive", "--newonly"]:
         sys.argv.append(op)
     sbg = isbg.ISBG()
     __main__.parse_args(sbg)

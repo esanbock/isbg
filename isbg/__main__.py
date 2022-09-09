@@ -49,7 +49,7 @@ if __package__ is None and not hasattr(sys, 'frozen'):
 from isbg import isbg  # noqa: E402
 
 def cleanmboxstring(mailbox):
-    if " " in mailbox and not mailbox.startswith('"'):
+    if mailbox is not None and " " in mailbox and not mailbox.startswith('"'):
         mailbox = '"' + mailbox + '"'
     return mailbox
 
